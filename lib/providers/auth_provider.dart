@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:valua_staff/constants/app.dart';
 import 'package:valua_staff/models/account.dart';
 import 'package:valua_staff/models/app_user.dart';
 import 'package:valua_staff/providers/base_provider.dart';
@@ -7,7 +8,7 @@ import 'package:valua_staff/repository/auth_repository.dart';
 import 'package:get_storage/get_storage.dart';
 
 class AuthProvider extends BaseProvider implements AuthRepository {
-  final GetStorage _storage = GetStorage();
+  final GetStorage _storage = GetStorage(AppConstant.storageKey);
 
   @override
   Future<AppUser> login(String email, String password) async {
@@ -26,7 +27,7 @@ class AuthProvider extends BaseProvider implements AuthRepository {
     final response = await get(
       "/authentication/refreshToken",
       headers: {
-        "refreshToken": _storage.read("refresh_token").toString(),
+        "refreshToken": _storage.read(AppConstant.refreshToken).toString(),
       },
     );
     if (response.status.hasError) {

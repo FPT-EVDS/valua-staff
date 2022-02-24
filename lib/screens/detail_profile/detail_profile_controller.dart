@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:cool_alert/cool_alert.dart';
+import 'package:valua_staff/constants/app.dart';
 import 'package:valua_staff/models/account.dart';
 import 'package:valua_staff/providers/auth_provider.dart';
 import 'package:valua_staff/repository/auth_repository.dart';
@@ -20,7 +21,7 @@ class DetailProfileController extends GetxController {
   late final dynamic gender;
   final AuthRepository _provider = Get.find<AuthProvider>();
   final isLoading = false.obs;
-  final GetStorage _storage = GetStorage();
+  final GetStorage _storage = GetStorage(AppConstant.storageKey);
   final DateFormat _dateFormat = DateFormat("dd/MM/yyyy");
 
   @override

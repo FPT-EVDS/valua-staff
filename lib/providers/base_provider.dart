@@ -1,3 +1,4 @@
+import 'package:valua_staff/constants/app.dart';
 import 'package:valua_staff/providers/auth_provider.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -5,7 +6,7 @@ import 'package:get_storage/get_storage.dart';
 class BaseProvider extends GetConnect {
   // final _baseUrl = 'http://10.0.2.2:8080';
   final _baseUrlOnRealDevice = "http://192.168.1.9:8080";
-  final _storage = GetStorage();
+  final _storage = GetStorage(AppConstant.storageKey);
 
   @override
   void onInit() {
@@ -17,7 +18,7 @@ class BaseProvider extends GetConnect {
     httpClient.timeout = const Duration(seconds: 15);
 
     httpClient.addRequestModifier<dynamic>((request) async {
-      String? token = _storage.read("access_token");
+      String? token = _storage.read(AppConstant.accessToken);
       if (token != null && !request.url.path.endsWith("login")) {
         request.headers['Authorization'] = 'Bearer $token';
       }
@@ -28,11 +29,11 @@ class BaseProvider extends GetConnect {
     httpClient.addAuthenticator<dynamic>((request) async {
       try {
         final token = await Get.find<AuthProvider>().refreshToken();
-        _storage.write("access_token", token);
+        _storage.write(AppConstant.accessToken, token);
         // Set the header
         request.headers['Authorization'] = 'Bearer $token';
       } catch (error) {
-        _storage.remove("access_token");
+        _storage.remove(AppConstant.accessToken);
         _storage.remove("refresh_token");
       }
       return request;

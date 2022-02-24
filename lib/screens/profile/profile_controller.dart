@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:community_material_icon/community_material_icon.dart';
+import 'package:valua_staff/constants/app.dart';
 import 'package:valua_staff/models/account.dart';
 import 'package:valua_staff/providers/auth_provider.dart';
 import 'package:valua_staff/repository/auth_repository.dart';
@@ -46,7 +47,7 @@ class ProfileController extends GetxController {
   ];
   final AuthRepository authRepository = Get.find<AuthProvider>();
   late final Account currentUser;
-  final GetStorage _storage = GetStorage();
+  final GetStorage _storage = GetStorage(AppConstant.storageKey);
 
   @override
   void onInit() {
@@ -57,9 +58,9 @@ class ProfileController extends GetxController {
   void handleMenuTap(int index) {
     // if logout
     if (menuData[index].to == AppRoutes.login) {
-      GetStorage _storage = GetStorage();
-      _storage.remove("access_token");
-      _storage.remove("refresh_token");
+      GetStorage _storage = GetStorage(AppConstant.storageKey);
+      _storage.remove(AppConstant.accessToken);
+      _storage.remove(AppConstant.refreshToken);
       _storage.remove("user");
     }
     // FIXME: Remove if when settings and term is initialize

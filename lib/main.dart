@@ -1,3 +1,4 @@
+import 'package:valua_staff/constants/app.dart';
 import 'package:valua_staff/providers/auth_provider.dart';
 import 'package:valua_staff/routes/routes.dart';
 import 'package:valua_staff/services/auth_service.dart';
@@ -18,7 +19,7 @@ Future<void> initServices() async {
     final license = await rootBundle.loadString('assets/font/OFL.txt');
     yield LicenseEntryWithLineBreaks(['google_fonts'], license);
   });
-  await Get.putAsync(() => GetStorage.init());
+  await Get.putAsync(() => GetStorage.init(AppConstant.storageKey));
 }
 
 class AppBinding extends Bindings {
@@ -34,13 +35,13 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    final GetStorage _storage = GetStorage();
+    final GetStorage _storage = GetStorage(AppConstant.storageKey);
     return GetMaterialApp(
       title: 'Valua Staff',
       theme: AppThemes(context).defaultTheme,
       defaultTransition: Transition.fade,
       initialBinding: AppBinding(),
-      initialRoute: _storage.read("access_token") != null
+      initialRoute: _storage.read(AppConstant.accessToken) != null
           ? AppRoutes.main
           : AppRoutes.login,
       debugShowCheckedModeBanner: false,
