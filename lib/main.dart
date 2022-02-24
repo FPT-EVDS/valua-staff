@@ -1,7 +1,7 @@
-import 'package:evds_staff/providers/auth_provider.dart';
-import 'package:evds_staff/routes/routes.dart';
-import 'package:evds_staff/services/auth_service.dart';
-import 'package:evds_staff/theme/theme.dart';
+import 'package:valua_staff/providers/auth_provider.dart';
+import 'package:valua_staff/routes/routes.dart';
+import 'package:valua_staff/services/auth_service.dart';
+import 'package:valua_staff/theme/theme.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -36,7 +36,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     final GetStorage _storage = GetStorage();
     return GetMaterialApp(
-      title: 'EVDS Staff',
+      title: 'Valua Staff',
       theme: AppThemes(context).defaultTheme,
       defaultTransition: Transition.fade,
       initialBinding: AppBinding(),

@@ -1,7 +1,7 @@
 import 'package:community_material_icon/community_material_icon.dart';
-import 'package:evds_staff/routes/app_pages.dart';
-import 'package:evds_staff/screens/profile/profile_controller.dart';
-import 'package:evds_staff/widgets/cached_circle_avatar.dart';
+import 'package:valua_staff/routes/app_pages.dart';
+import 'package:valua_staff/screens/profile/profile_controller.dart';
+import 'package:valua_staff/widgets/cached_circle_avatar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

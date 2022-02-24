@@ -1,10 +1,10 @@
 import 'dart:convert';
 
 import 'package:community_material_icon/community_material_icon.dart';
-import 'package:evds_staff/models/account.dart';
-import 'package:evds_staff/providers/auth_provider.dart';
-import 'package:evds_staff/repository/auth_repository.dart';
-import 'package:evds_staff/routes/app_pages.dart';
+import 'package:valua_staff/models/account.dart';
+import 'package:valua_staff/providers/auth_provider.dart';
+import 'package:valua_staff/repository/auth_repository.dart';
+import 'package:valua_staff/routes/app_pages.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';

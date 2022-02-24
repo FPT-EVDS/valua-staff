@@ -1,7 +1,7 @@
 import 'package:community_material_icon/community_material_icon.dart';
-import 'package:evds_staff/screens/detail_violation/detail_violation_controller.dart';
-import 'package:evds_staff/widgets/carousel_with_indicator.dart';
-import 'package:evds_staff/widgets/round_button.dart';
+import 'package:valua_staff/screens/detail_violation/detail_violation_controller.dart';
+import 'package:valua_staff/widgets/carousel_with_indicator.dart';
+import 'package:valua_staff/widgets/round_button.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

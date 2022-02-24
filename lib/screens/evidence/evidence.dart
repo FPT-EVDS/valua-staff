@@ -1,6 +1,6 @@
-import 'package:evds_staff/routes/app_pages.dart';
-import 'package:evds_staff/screens/evidence/evidence_controller.dart';
-import 'package:evds_staff/widgets/evidence_card.dart';
+import 'package:valua_staff/routes/app_pages.dart';
+import 'package:valua_staff/screens/evidence/evidence_controller.dart';
+import 'package:valua_staff/widgets/evidence_card.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

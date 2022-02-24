@@ -1,6 +1,6 @@
 import 'package:community_material_icon/community_material_icon.dart';
-import 'package:evds_staff/routes/app_pages.dart';
-import 'package:evds_staff/widgets/shift_card.dart';
+import 'package:valua_staff/routes/app_pages.dart';
+import 'package:valua_staff/widgets/shift_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';

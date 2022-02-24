@@ -1,15 +1,15 @@
-import 'package:evds_staff/providers/auth_provider.dart';
+import 'package:valua_staff/providers/auth_provider.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 
 class BaseProvider extends GetConnect {
-  final _baseUrl = 'http://10.0.2.2:8080';
-  // final _baseUrlOnRealDevice = "http://192.168.1.91:8080";
+  // final _baseUrl = 'http://10.0.2.2:8080';
+  final _baseUrlOnRealDevice = "http://192.168.1.9:8080";
   final _storage = GetStorage();
 
   @override
   void onInit() {
-    httpClient.baseUrl = _baseUrl;
+    httpClient.baseUrl = _baseUrlOnRealDevice;
     httpClient.defaultContentType = "application/json";
     //Autenticator will be called 1 times if HttpStatus is
     //HttpStatus.unauthorized

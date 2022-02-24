@@ -1,5 +1,5 @@
-import 'package:evds_staff/routes/app_pages.dart';
-import 'package:evds_staff/widgets/shift_violation_card.dart';
+import 'package:valua_staff/routes/app_pages.dart';
+import 'package:valua_staff/widgets/shift_violation_card.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

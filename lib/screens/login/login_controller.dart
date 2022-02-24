@@ -1,8 +1,8 @@
 import 'dart:convert';
 
-import 'package:evds_staff/providers/auth_provider.dart';
-import 'package:evds_staff/repository/auth_repository.dart';
-import 'package:evds_staff/routes/routes.dart';
+import 'package:valua_staff/providers/auth_provider.dart';
+import 'package:valua_staff/repository/auth_repository.dart';
+import 'package:valua_staff/routes/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
