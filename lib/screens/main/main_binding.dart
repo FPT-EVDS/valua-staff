@@ -1,4 +1,5 @@
-import 'package:valua_staff/screens/evidence/evidence_controller.dart';
+import 'package:valua_staff/providers/shift_provider.dart';
+import 'package:valua_staff/screens/home/home_controller.dart';
 import 'package:valua_staff/screens/main/main_controller.dart';
 import 'package:valua_staff/providers/auth_provider.dart';
 import 'package:valua_staff/screens/notification/notification_controller.dart';
@@ -9,9 +10,10 @@ class MainBinding extends Bindings {
   @override
   void dependencies() {
     Get.lazyPut<AuthProvider>(() => AuthProvider());
+    Get.lazyPut<HomeController>(() => HomeController());
     Get.lazyPut<MainController>(() => MainController());
     Get.lazyPut<NotificationController>(() => NotificationController());
-    Get.lazyPut<EvidenceController>(() => EvidenceController());
     Get.lazyPut<ProfileController>(() => ProfileController());
+    Get.lazyPut<ShiftProvider>(() => ShiftProvider());
   }
 }

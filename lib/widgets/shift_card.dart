@@ -8,15 +8,17 @@ class ShiftCard extends StatelessWidget {
   final DateTime beginTime;
   final DateTime endTime;
   final String location;
+  final void Function()? onTap;
 
-  const ShiftCard(
-      {Key? key,
-      required this.thumbnail,
-      required this.date,
-      required this.beginTime,
-      required this.endTime,
-      required this.location})
-      : super(key: key);
+  const ShiftCard({
+    Key? key,
+    required this.thumbnail,
+    required this.date,
+    required this.beginTime,
+    required this.endTime,
+    required this.location,
+    this.onTap,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +26,7 @@ class ShiftCard extends StatelessWidget {
       elevation: 2,
       child: InkWell(
         splashColor: Colors.blue.withAlpha(30),
-        onTap: () {},
+        onTap: onTap,
         child: SizedBox(
           width: double.infinity,
           height: 150,
