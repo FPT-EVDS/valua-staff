@@ -23,7 +23,8 @@ class ShiftController extends GetxController {
 
   Future<List<Semester>> getListSemesters() async {
     try {
-      final data = await _semesterRepository.getSemesters();
+      // Get actived semesters only
+      final data = await _semesterRepository.getSemesters(status: 1);
       return data.semesters;
     } catch (err) {
       throw Exception(err);

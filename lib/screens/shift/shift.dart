@@ -102,73 +102,73 @@ class ShiftScreen extends StatelessWidget {
                           ),
                         );
                       }
-                      return ListView.builder(
-                          itemCount: data.totalItems,
-                          itemBuilder: (context, index) {
-                            return Card(
-                              elevation: 2,
-                              margin: const EdgeInsets.symmetric(
-                                vertical: 8.0,
-                                horizontal: 4.0,
-                              ),
-                              child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: ListTile(
-                                  title: Text(
-                                    "Date: " +
-                                        DateFormat('dd/MM/yyyy').format(
-                                            assignShiftDetail[index]
-                                                .shift
-                                                .beginTime),
-                                    style: const TextStyle(
-                                      fontWeight: FontWeight.bold,
+                      return RefreshIndicator(
+                        onRefresh: () async {
+                          await _controller.getAssignedShift(
+                              semesterId: _controller
+                                  .currentSemester?.value.semesterId);
+                        },
+                        child: ListView.builder(
+                            itemCount: data.totalItems,
+                            itemBuilder: (context, index) {
+                              return Card(
+                                elevation: 2,
+                                margin: const EdgeInsets.symmetric(
+                                  vertical: 8.0,
+                                  horizontal: 4.0,
+                                ),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: ListTile(
+                                    title: Text(
+                                      "Date: " +
+                                          DateFormat('dd/MM/yyyy').format(
+                                              assignShiftDetail[index]
+                                                  .shift
+                                                  .beginTime),
+                                      style: const TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                      ),
                                     ),
-                                  ),
-                                  subtitle: Padding(
-                                    padding: const EdgeInsets.only(top: 8.0),
-                                    child: Column(
+                                    subtitle: Padding(
+                                      padding: const EdgeInsets.only(top: 8.0),
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            "Room: ${assignShiftDetail[index].room.roomName}",
+                                            style: const TextStyle(
+                                              color: Colors.black87,
+                                              fontWeight: FontWeight.w500,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    trailing: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
                                       crossAxisAlignment:
-                                          CrossAxisAlignment.start,
+                                          CrossAxisAlignment.center,
                                       children: [
                                         Text(
-                                          "Subject: ${assignShiftDetail[index].subject.subjectCode}",
-                                          overflow: TextOverflow.ellipsis,
-                                          style: const TextStyle(
-                                            color: Colors.black87,
-                                            fontWeight: FontWeight.w500,
-                                          ),
-                                        ),
-                                        const SizedBox(height: 8.0),
-                                        Text(
-                                          "Room: ${assignShiftDetail[index].room.roomName}",
-                                          style: const TextStyle(
-                                            color: Colors.black87,
-                                            fontWeight: FontWeight.w500,
+                                          "${_timeFormat.format(assignShiftDetail[index].shift.beginTime)} "
+                                          "- ${_timeFormat.format(assignShiftDetail[index].shift.finishTime)}",
+                                          style: TextStyle(
+                                            color:
+                                                Theme.of(context).primaryColor,
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 16,
                                           ),
                                         ),
                                       ],
                                     ),
                                   ),
-                                  trailing: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: [
-                                      Text(
-                                        "${_timeFormat.format(assignShiftDetail[index].shift.beginTime)} "
-                                        "- ${_timeFormat.format(assignShiftDetail[index].shift.finishTime)}",
-                                        style: TextStyle(
-                                          color: Theme.of(context).primaryColor,
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 16,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
                                 ),
-                              ),
-                            );
-                          });
+                              );
+                            }),
+                      );
                     }
                     return Center(
                       child: Column(

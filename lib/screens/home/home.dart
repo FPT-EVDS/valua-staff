@@ -23,7 +23,7 @@ class HomeScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: const [
                 Text(
-                  "Today's exam",
+                  "Today's shift",
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 16,
@@ -68,7 +68,7 @@ class HomeScreen extends StatelessWidget {
                         ),
                         const SizedBox(height: 15),
                         Text(
-                          "No exams available!",
+                          "No shifts available!",
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                             color: Colors.grey.shade600,
@@ -122,7 +122,9 @@ class HomeScreen extends StatelessWidget {
                     color: Theme.of(context).primaryColor,
                   ),
                   title: "Shift registration",
-                  onTap: () {},
+                  onTap: () {
+                    Get.toNamed(AppRoutes.shiftRegistration);
+                  },
                 ),
               ],
             ),

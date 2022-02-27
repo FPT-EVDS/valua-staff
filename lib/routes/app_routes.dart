@@ -11,4 +11,5 @@ abstract class AppRoutes {
   static const detailProfile = '/profile/detail';
   static const changePassword = '/password/change';
   static const qr = '/qr';
+  static const shiftRegistration = '/shift-registration';
 }
