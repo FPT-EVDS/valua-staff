@@ -69,7 +69,7 @@ class DetailProfileController extends GetxController {
             .format(_dateFormat.parse(birthdateController.text));
         final Account data = await _provider.updateProfile(account);
         data.gender = gender.value;
-        _storage.write("user", jsonEncode(data));
+        _storage.write(AppConstant.appUser, jsonEncode(data));
         CoolAlert.show(
           context: context,
           type: CoolAlertType.success,

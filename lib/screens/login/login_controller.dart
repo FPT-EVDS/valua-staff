@@ -38,7 +38,7 @@ class LoginController extends GetxController {
         isLoading.value = true;
         final data = await _provider.login(email, password);
         if (data.appUser.role == "Staff") {
-          _storage.write("user", jsonEncode(data.appUser));
+          _storage.write(AppConstant.appUser, jsonEncode(data.appUser));
           _storage.write(AppConstant.accessToken, data.token);
           _storage.write(AppConstant.refreshToken, data.appUser.refreshToken);
           Get.offAllNamed(AppRoutes.main);

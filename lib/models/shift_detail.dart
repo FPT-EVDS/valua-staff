@@ -1,7 +1,6 @@
 import 'package:json_annotation/json_annotation.dart';
 import 'package:valua_staff/models/room.dart';
 import 'package:valua_staff/models/shift.dart';
-import 'package:valua_staff/models/subject.dart';
 part 'shift_detail.g.dart';
 
 @JsonSerializable()

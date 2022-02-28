@@ -15,7 +15,7 @@ class ShiftRegistrationController extends GetxController {
     try {
       final data = _shiftRepository.getAvailableShifts().then((value) {
         isExpandedList.value =
-            List.generate(value.shifts.length, (index) => false);
+            List.generate(value.shifts.length, (index) => true);
         return value;
       });
       availableShifts.value = data;
