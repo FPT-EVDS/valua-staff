@@ -69,4 +69,13 @@ class AuthProvider extends BaseProvider implements AuthRepository {
     }
     return response.body;
   }
+
+  @override
+  Future<AppUser> loginWithGoogle(String idToken) async {
+    final response = await post("/authentication/verify/firebase", idToken);
+    if (response.status.hasError) {
+      throw (response.body);
+    }
+    return AppUser.fromJson(response.body);
+  }
 }

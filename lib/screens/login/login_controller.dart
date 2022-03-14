@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:valua_staff/constants/app.dart';
 import 'package:valua_staff/providers/auth_provider.dart';
 import 'package:valua_staff/repository/auth_repository.dart';
@@ -15,6 +16,7 @@ class LoginController extends GetxController {
   final isLoading = false.obs;
   final AuthRepository _provider = Get.find<AuthProvider>();
   final GetStorage _storage = GetStorage(AppConstant.storageKey);
+  final _googleSignIn = GoogleSignIn();
 
   @override
   void onInit() {
@@ -52,6 +54,35 @@ class LoginController extends GetxController {
         );
       } finally {
         isLoading.value = false;
+      }
+    }
+  }
+
+  void loginWithGoogle() async {
+    try {
+      final googleAccount = await _googleSignIn.signIn();
+      final googleAuthentication = await googleAccount?.authentication;
+      if (googleAuthentication?.idToken != null) {
+        final idToken = googleAuthentication!.idToken.toString();
+        final data = await _provider.loginWithGoogle(idToken);
+        if (data.appUser.role == "Staff") {
+          _storage.write(AppConstant.appUser, jsonEncode(data.appUser));
+          _storage.write(AppConstant.accessToken, data.token);
+          _storage.write(AppConstant.refreshToken, data.appUser.refreshToken);
+          Get.offAllNamed(AppRoutes.main);
+        } else {
+          throw ("Invalid role!");
+        }
+      }
+    } catch (e) {
+      Fluttertoast.showToast(
+        msg: e.toString(),
+        backgroundColor: Colors.grey.shade700,
+      );
+    } finally {
+      final isSignedIn = await _googleSignIn.isSignedIn();
+      if (isSignedIn) {
+        _googleSignIn.disconnect();
       }
     }
   }

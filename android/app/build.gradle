@@ -51,6 +51,16 @@ android {
         versionName flutterVersionName
     }
 
+    signingConfigs {
+        // Test environment only
+        debug {
+            keyAlias 'valuastaffdebugkey'
+            keyPassword 'android'
+            storeFile file('valua-staff-key.jks')
+            storePassword 'android'
+        }
+    }
+
     buildTypes {
         release {
             // TODO: Add your own signing config for the release build.
