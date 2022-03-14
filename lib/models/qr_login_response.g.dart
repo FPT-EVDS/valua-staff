@@ -8,12 +8,13 @@ part of 'qr_login_response.dart';
 
 QrLoginResponse _$QrLoginResponseFromJson(Map<String, dynamic> json) =>
     QrLoginResponse(
-      message: json['message'] as String,
+      appUser: AppUser.fromJson(
+          json['authenticationResponse'] as Map<String, dynamic>),
       status: json['status'] as bool,
     );
 
 Map<String, dynamic> _$QrLoginResponseToJson(QrLoginResponse instance) =>
     <String, dynamic>{
-      'message': instance.message,
+      'authenticationResponse': instance.appUser,
       'status': instance.status,
     };

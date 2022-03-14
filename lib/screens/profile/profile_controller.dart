@@ -30,16 +30,6 @@ class ProfileController extends GetxController {
       to: AppRoutes.changePassword,
     ),
     MenuItem(
-      icon: CommunityMaterialIcons.cog,
-      title: "Settings",
-      to: "#",
-    ),
-    MenuItem(
-      icon: CommunityMaterialIcons.file_document,
-      title: "Terms & Policies",
-      to: "#",
-    ),
-    MenuItem(
       icon: CommunityMaterialIcons.logout_variant,
       title: "Logout",
       to: AppRoutes.login,

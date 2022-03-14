@@ -1,13 +1,15 @@
 import 'package:json_annotation/json_annotation.dart';
+import 'package:valua_staff/models/app_user.dart';
 part 'qr_login_response.g.dart';
 
 @JsonSerializable()
 class QrLoginResponse {
-  String message;
+  @JsonKey(name: "authenticationResponse")
+  AppUser appUser;
   bool status;
 
   QrLoginResponse({
-    required this.message,
+    required this.appUser,
     required this.status,
   });
 

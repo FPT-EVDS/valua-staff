@@ -1,4 +1,5 @@
 import 'package:animations/animations.dart';
+import 'package:badges/badges.dart';
 import 'package:community_material_icon/community_material_icon.dart';
 import 'package:valua_staff/routes/app_pages.dart';
 import 'package:valua_staff/screens/home/home.dart';
@@ -7,6 +8,7 @@ import 'package:valua_staff/screens/notification/notification.dart';
 import 'package:valua_staff/screens/profile/profile.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:valua_staff/services/local_notification_service.dart';
 
 class MainScreen extends StatelessWidget {
   const MainScreen({Key? key}) : super(key: key);
@@ -40,17 +42,19 @@ class MainScreen extends StatelessWidget {
                       ),
                     ),
             ),
-            actions: [
-              IconButton(
-                onPressed: () async {
-                  final qrToken = await Get.toNamed(AppRoutes.qr);
-                  if (qrToken != null) {
-                    _controller.validateLoginQRCode(qrToken);
-                  }
-                },
-                icon: const Icon(CommunityMaterialIcons.qrcode_scan),
-              )
-            ],
+            actions: _controller.tabIndex.value == 0
+                ? [
+                    IconButton(
+                      onPressed: () async {
+                        final qrToken = await Get.toNamed(AppRoutes.qr);
+                        if (qrToken != null) {
+                          _controller.validateLoginQRCode(qrToken);
+                        }
+                      },
+                      icon: const Icon(CommunityMaterialIcons.qrcode_scan),
+                    )
+                  ]
+                : [],
           ),
         ),
         body: SafeArea(
@@ -82,18 +86,25 @@ class MainScreen extends StatelessWidget {
             currentIndex: _controller.tabIndex.value,
             unselectedFontSize: 12,
             selectedFontSize: 12,
-            items: const [
-              BottomNavigationBarItem(
+            items: [
+              const BottomNavigationBarItem(
                 icon: Icon(CommunityMaterialIcons.home_outline),
                 activeIcon: Icon(CommunityMaterialIcons.home),
                 label: 'Home',
               ),
               BottomNavigationBarItem(
-                icon: Icon(CommunityMaterialIcons.bell_outline),
-                activeIcon: Icon(CommunityMaterialIcons.bell),
+                icon: Obx(
+                  () => Badge(
+                    child: const Icon(CommunityMaterialIcons.bell_outline),
+                    showBadge: LocalNotificationService.hasUnreadMessage.value,
+                    elevation: 0,
+                    position: BadgePosition.topEnd(top: 0, end: 0),
+                  ),
+                ),
+                activeIcon: const Icon(CommunityMaterialIcons.bell),
                 label: 'Notification',
               ),
-              BottomNavigationBarItem(
+              const BottomNavigationBarItem(
                 icon: Icon(CommunityMaterialIcons.account_circle_outline),
                 activeIcon: Icon(CommunityMaterialIcons.account_circle),
                 label: 'Profile',

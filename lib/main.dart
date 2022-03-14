@@ -15,10 +15,7 @@ import 'package:valua_staff/theme/theme.dart';
 
 // Receive message when app is in background
 // Solution for on message
-Future<void> backgroundHandler(RemoteMessage message) async {
-  print(message.data.toString());
-  print(message.notification?.title);
-}
+Future<void> backgroundHandler(RemoteMessage message) async {}
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

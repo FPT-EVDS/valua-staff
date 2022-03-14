@@ -4,6 +4,7 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
 
 class LocalNotificationService extends GetxController {
+  static final hasUnreadMessage = false.obs;
   static final FlutterLocalNotificationsPlugin _notificationsPlugin =
       FlutterLocalNotificationsPlugin();
 
@@ -14,7 +15,7 @@ class LocalNotificationService extends GetxController {
     _notificationsPlugin.initialize(initializationSettings,
         onSelectNotification: (String? route) async {
       if (route != null) {
-        Navigator.of(context).pushNamed(route);
+        Get.toNamed(route);
       }
     });
   }
@@ -32,8 +33,13 @@ class LocalNotificationService extends GetxController {
       await _notificationsPlugin.show(id, message.notification?.title,
           message.notification?.body, notificationDetails,
           payload: message.data["route"]);
+      hasUnreadMessage.value = true;
     } on Exception catch (e) {
       print(e);
     }
+  }
+
+  static void enableReadAllMessage() {
+    hasUnreadMessage.value = true;
   }
 }
