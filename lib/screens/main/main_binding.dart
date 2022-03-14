@@ -1,3 +1,4 @@
+import 'package:valua_staff/providers/qr_provider.dart';
 import 'package:valua_staff/providers/shift_provider.dart';
 import 'package:valua_staff/screens/home/home_controller.dart';
 import 'package:valua_staff/screens/main/main_controller.dart';
@@ -15,5 +16,6 @@ class MainBinding extends Bindings {
     Get.lazyPut<NotificationController>(() => NotificationController());
     Get.lazyPut<ProfileController>(() => ProfileController());
     Get.lazyPut<ShiftProvider>(() => ShiftProvider());
+    Get.lazyPut<QRProvider>(() => QRProvider());
   }
 }

@@ -1,7 +1,7 @@
 import 'dart:io';
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 
 class QRScannerScreen extends StatefulWidget {
@@ -29,9 +29,7 @@ class _QRScannerScreenState extends State<QRScannerScreen> {
   void _onQRViewCreated(QRViewController controller) {
     this.controller = controller;
     controller.scannedDataStream.listen((scanData) {
-      setState(() {
-        result = scanData;
-      });
+      Get.back(result: scanData.code);
     });
   }
 
@@ -60,13 +58,10 @@ class _QRScannerScreenState extends State<QRScannerScreen> {
               ),
             ),
           ),
-          Expanded(
+          const Expanded(
             flex: 1,
             child: Center(
-              child: (result != null)
-                  ? Text(
-                      'Barcode Type: ${describeEnum(result!.format)}   Data: ${result!.code}')
-                  : const Text('Scan a code'),
+              child: Text('Scan camera app login QR code'),
             ),
           )
         ],

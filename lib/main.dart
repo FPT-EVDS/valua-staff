@@ -1,5 +1,10 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:valua_staff/constants/app.dart';
 import 'package:valua_staff/providers/auth_provider.dart';
 import 'package:valua_staff/routes/routes.dart';
@@ -7,11 +12,6 @@ import 'package:valua_staff/services/auth_service.dart';
 import 'package:valua_staff/services/firebase_messaging_service.dart';
 import 'package:valua_staff/services/local_notification_service.dart';
 import 'package:valua_staff/theme/theme.dart';
-import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
 
 // Receive message when app is in background
 // Solution for on message
