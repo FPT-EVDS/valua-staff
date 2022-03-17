@@ -1,4 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
+import 'package:valua_staff/enums/shift_status.dart';
 import 'package:valua_staff/models/shift.dart';
 part 'shifts_registration.g.dart';
 
@@ -15,25 +16,23 @@ class ShiftsRegistration {
 }
 
 @JsonSerializable()
-class ShiftsRegistrationDetail extends Shift {
+class ShiftsRegistrationDetail {
+  String shiftId;
+  DateTime beginTime;
+  DateTime finishTime;
   int availableSlots;
+  ShiftStatus status;
 
   ShiftsRegistrationDetail({
     required this.availableSlots,
-    required beginTime,
-    required finishTime,
-    required shiftId,
-    required status,
-  }) : super(
-          beginTime: DateTime.parse(beginTime),
-          finishTime: DateTime.parse(finishTime),
-          shiftId: shiftId,
-          status: status,
-        );
+    required this.beginTime,
+    required this.finishTime,
+    required this.shiftId,
+    required this.status,
+  });
 
   factory ShiftsRegistrationDetail.fromJson(Map<String, dynamic> json) =>
       _$ShiftsRegistrationDetailFromJson(json);
 
-  @override
   Map<String, dynamic> toJson() => _$ShiftsRegistrationDetailToJson(this);
 }

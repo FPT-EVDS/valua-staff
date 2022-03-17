@@ -2,6 +2,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
+import 'package:valua_staff/screens/notification/notification_controller.dart';
 
 class LocalNotificationService extends GetxController {
   static final hasUnreadMessage = false.obs;
@@ -22,6 +23,7 @@ class LocalNotificationService extends GetxController {
 
   static void showNotification(RemoteMessage message) async {
     try {
+      final _notifcationController = Get.find<NotificationController>();
       final id = DateTime.now().millisecond ~/ 1000;
       const NotificationDetails notificationDetails = NotificationDetails(
           android: AndroidNotificationDetails(
@@ -33,6 +35,7 @@ class LocalNotificationService extends GetxController {
       await _notificationsPlugin.show(id, message.notification?.title,
           message.notification?.body, notificationDetails,
           payload: message.data["route"]);
+      _notifcationController.getNotifications();
       hasUnreadMessage.value = true;
     } on Exception catch (e) {
       print(e);

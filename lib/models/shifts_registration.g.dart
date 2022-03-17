@@ -23,10 +23,10 @@ ShiftsRegistrationDetail _$ShiftsRegistrationDetailFromJson(
         Map<String, dynamic> json) =>
     ShiftsRegistrationDetail(
       availableSlots: json['availableSlots'] as int,
-      beginTime: json['beginTime'],
-      finishTime: json['finishTime'],
-      shiftId: json['shiftId'],
-      status: json['status'],
+      beginTime: DateTime.parse(json['beginTime'] as String),
+      finishTime: DateTime.parse(json['finishTime'] as String),
+      shiftId: json['shiftId'] as String,
+      status: $enumDecode(_$ShiftStatusEnumMap, json['status']),
     );
 
 Map<String, dynamic> _$ShiftsRegistrationDetailToJson(
@@ -35,6 +35,16 @@ Map<String, dynamic> _$ShiftsRegistrationDetailToJson(
       'shiftId': instance.shiftId,
       'beginTime': instance.beginTime.toIso8601String(),
       'finishTime': instance.finishTime.toIso8601String(),
-      'status': instance.status,
       'availableSlots': instance.availableSlots,
+      'status': _$ShiftStatusEnumMap[instance.status],
     };
+
+const _$ShiftStatusEnumMap = {
+  ShiftStatus.removed: 0,
+  ShiftStatus.finished: 1,
+  ShiftStatus.locked: 2,
+  ShiftStatus.ready: 3,
+  ShiftStatus.notReady: 4,
+  ShiftStatus.staffing: 5,
+  ShiftStatus.ongoing: 6,
+};

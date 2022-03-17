@@ -25,7 +25,7 @@ class NotificationController extends GetxController {
         msg: e.toString(),
         backgroundColor: Colors.grey.shade700,
       );
+      throw Exception(e);
     }
-    return Future(() => null);
   }
 }

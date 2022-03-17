@@ -1,5 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'package:valua_staff/enums/notification_status.dart';
+import 'package:valua_staff/enums/notification_type.dart';
 part 'notification_list.g.dart';
 
 @JsonSerializable()
@@ -25,10 +25,11 @@ class NotificationList {
 @JsonSerializable()
 class NotificationItem {
   String notificationId;
-  NotificationStatus type;
+  NotificationType type;
   String header;
   String content;
   String route;
+  DateTime createdDate;
 
   NotificationItem({
     required this.notificationId,
@@ -36,6 +37,7 @@ class NotificationItem {
     required this.header,
     required this.content,
     required this.route,
+    required this.createdDate,
   });
 
   factory NotificationItem.fromJson(Map<String, dynamic> json) =>

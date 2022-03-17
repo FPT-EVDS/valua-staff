@@ -27,23 +27,26 @@ Map<String, dynamic> _$NotificationListToJson(NotificationList instance) =>
 NotificationItem _$NotificationItemFromJson(Map<String, dynamic> json) =>
     NotificationItem(
       notificationId: json['notificationId'] as String,
-      type: $enumDecode(_$NotificationStatusEnumMap, json['type']),
+      type: $enumDecode(_$NotificationTypeEnumMap, json['type']),
       header: json['header'] as String,
       content: json['content'] as String,
       route: json['route'] as String,
+      createdDate: DateTime.parse(json['createdDate'] as String),
     );
 
 Map<String, dynamic> _$NotificationItemToJson(NotificationItem instance) =>
     <String, dynamic>{
       'notificationId': instance.notificationId,
-      'type': _$NotificationStatusEnumMap[instance.type],
+      'type': _$NotificationTypeEnumMap[instance.type],
       'header': instance.header,
       'content': instance.content,
       'route': instance.route,
+      'createdDate': instance.createdDate.toIso8601String(),
     };
 
-const _$NotificationStatusEnumMap = {
-  NotificationStatus.assigned: 2,
-  NotificationStatus.pendingReport: 3,
-  NotificationStatus.resolvedReport: 4,
+const _$NotificationTypeEnumMap = {
+  NotificationType.assigned: 2,
+  NotificationType.pendingReport: 3,
+  NotificationType.resolvedReport: 4,
+  NotificationType.shiftOpen: 5,
 };

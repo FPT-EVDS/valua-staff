@@ -1,3 +1,6 @@
+import 'package:community_material_icon/community_material_icon.dart';
+import 'package:intl/intl.dart';
+import 'package:valua_staff/enums/notification_type.dart';
 import 'package:valua_staff/models/notification_list.dart';
 import 'package:valua_staff/screens/notification/notification_controller.dart';
 import 'package:flutter/material.dart';
@@ -6,6 +9,39 @@ import 'package:get/get.dart';
 
 class NotificationScreen extends StatelessWidget {
   const NotificationScreen({Key? key}) : super(key: key);
+
+  Widget _buildNotificationListTile(
+      BuildContext context, NotificationItem notification) {
+    DateFormat _formatter = DateFormat("dd/MM/yyyy HH:mm");
+    IconData iconData = CommunityMaterialIcons.bell;
+    Color backgroundColor = Colors.blue;
+    switch (notification.type) {
+      case NotificationType.shiftOpen:
+        iconData = CommunityMaterialIcons.calendar_clock;
+        break;
+      case NotificationType.assigned:
+        iconData = CommunityMaterialIcons.clipboard_check;
+        backgroundColor = Colors.green.shade500;
+        break;
+      default:
+        break;
+    }
+    return ListTile(
+      leading: CircleAvatar(
+        backgroundColor: backgroundColor,
+        foregroundColor: Colors.white,
+        child: Icon(iconData),
+      ),
+      title: Text(notification.header),
+      subtitle: Text(
+        _formatter.format(notification.createdDate.toLocal()),
+        overflow: TextOverflow.ellipsis,
+      ),
+      onTap: () {
+        Get.toNamed(notification.route);
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -25,21 +61,7 @@ class NotificationScreen extends StatelessWidget {
                   return ListView.builder(
                     itemBuilder: (context, index) {
                       final notification = data.notifications[index];
-                      return ListTile(
-                        leading: CircleAvatar(
-                          backgroundColor: Theme.of(context).primaryColor,
-                          foregroundColor: Colors.white,
-                          child: const Icon(Icons.notifications),
-                        ),
-                        title: Text(notification.header),
-                        subtitle: Text(
-                          notification.content,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                        onTap: () {
-                          Get.toNamed(notification.route);
-                        },
-                      );
+                      return _buildNotificationListTile(context, notification);
                     },
                     itemCount: data.notifications.length,
                   );
