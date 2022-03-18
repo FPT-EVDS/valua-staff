@@ -1,21 +1,21 @@
 import 'package:get/get.dart';
 import 'package:valua_staff/models/assigned_shift.dart';
 import 'package:valua_staff/models/semester.dart';
+import 'package:valua_staff/providers/exam_room_provider.dart';
 import 'package:valua_staff/providers/semester_provider.dart';
-import 'package:valua_staff/providers/shift_provider.dart';
+import 'package:valua_staff/repository/exam_room_repository.dart';
 import 'package:valua_staff/repository/semester_repository.dart';
-import 'package:valua_staff/repository/shift_repository.dart';
 
 class ShiftController extends GetxController {
   final assignedShiftList = Future<AssignedShift?>.value().obs;
   final Rx<Semester>? currentSemester = null;
-  final ShiftRepository _shiftRepository = Get.find<ShiftProvider>();
+  final ExamRoomRepository _provider = Get.find<ExamRoomProvider>();
   final SemesterRepository _semesterRepository = Get.find<SemesterProvider>();
 
   Future<void> getAssignedShift({String? semesterId}) async {
     try {
       assignedShiftList.value =
-          _shiftRepository.getAssignedShift(semesterId: semesterId);
+          _provider.getAssignedShift(semesterId: semesterId);
     } catch (err) {
       throw Exception(err);
     }

@@ -13,7 +13,8 @@ class HomeController extends GetxController {
 
   Future<AssignedExamRoom?> getAssignedExamRoom() async {
     try {
-      final data = _provider.getAssignedExamRoom().then((value) {
+      final data = _provider.getAssignedExamRoom();
+      data.then((value) {
         assignedExamRoom.value = value;
         final shiftBeginTime = value.currentShift.beginTime.toLocal();
         final shiftEndTime = value.currentShift.finishTime.toLocal();
@@ -24,6 +25,7 @@ class HomeController extends GetxController {
             currentTime.isBefore(shiftEndTime)) {
           shiftTitle.value = 'Current shift';
         }
+        return value;
       });
       assignedExamRoomFuture.value = data;
       return data;

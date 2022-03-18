@@ -1,6 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
 import 'package:valua_staff/enums/shift_status.dart';
-import 'package:valua_staff/models/shift.dart';
 part 'shifts_registration.g.dart';
 
 @JsonSerializable()
