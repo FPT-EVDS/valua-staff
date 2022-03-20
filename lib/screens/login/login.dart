@@ -1,7 +1,7 @@
+import 'package:community_material_icon/community_material_icon.dart';
 import 'package:valua_staff/screens/login/login_controller.dart';
 import 'package:valua_staff/widgets/round_button.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:get/get.dart';
 
@@ -82,7 +82,20 @@ class LoginScreen extends StatelessWidget {
                         label: "Login",
                         isLoading: _controller.isLoading.value,
                       ),
-                    )
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    RoundButton(
+                      onPressed: () {
+                        _controller.loginWithGoogle();
+                      },
+                      height: 45,
+                      icon: const Icon(CommunityMaterialIcons.google),
+                      width: double.infinity,
+                      label: "Login with Google",
+                      color: Colors.red,
+                    ),
                   ],
                 ),
               ),

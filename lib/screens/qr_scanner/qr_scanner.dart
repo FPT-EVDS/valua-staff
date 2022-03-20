@@ -1,17 +1,17 @@
 import 'dart:io';
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 
-class QRScanner extends StatefulWidget {
-  const QRScanner({Key? key}) : super(key: key);
+class QRScannerScreen extends StatefulWidget {
+  const QRScannerScreen({Key? key}) : super(key: key);
 
   @override
-  _QRScannerState createState() => _QRScannerState();
+  _QRScannerScreenState createState() => _QRScannerScreenState();
 }
 
-class _QRScannerState extends State<QRScanner> {
+class _QRScannerScreenState extends State<QRScannerScreen> {
   final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
   Barcode? result;
   QRViewController? controller;
@@ -29,9 +29,7 @@ class _QRScannerState extends State<QRScanner> {
   void _onQRViewCreated(QRViewController controller) {
     this.controller = controller;
     controller.scannedDataStream.listen((scanData) {
-      setState(() {
-        result = scanData;
-      });
+      Get.back(result: scanData.code);
     });
   }
 
@@ -60,13 +58,10 @@ class _QRScannerState extends State<QRScanner> {
               ),
             ),
           ),
-          Expanded(
+          const Expanded(
             flex: 1,
             child: Center(
-              child: (result != null)
-                  ? Text(
-                      'Barcode Type: ${describeEnum(result!.format)}   Data: ${result!.code}')
-                  : const Text('Scan a code'),
+              child: Text('Scan camera app login QR code'),
             ),
           )
         ],

@@ -5,14 +5,69 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:valua_staff/models/assigned_shift.dart';
 import 'package:valua_staff/models/semester.dart';
+import 'package:valua_staff/models/shift_detail.dart';
 import 'package:valua_staff/screens/shift/shift_controller.dart';
 
 class ShiftScreen extends StatelessWidget {
   const ShiftScreen({Key? key}) : super(key: key);
 
+  Widget _buildShiftCard(
+      BuildContext context, int index, ShiftDetail shiftDetail) {
+    final DateFormat _timeFormat = DateFormat("HH:mm");
+    return Card(
+      elevation: 2,
+      margin: const EdgeInsets.symmetric(
+        vertical: 8.0,
+        horizontal: 4.0,
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: ListTile(
+          title: Text(
+            "Date: " +
+                DateFormat('dd/MM/yyyy')
+                    .format(shiftDetail.shift.beginTime.toLocal()),
+            style: const TextStyle(
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          subtitle: Padding(
+            padding: const EdgeInsets.only(top: 8.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  "Room: ${shiftDetail.room.roomName}",
+                  style: const TextStyle(
+                    color: Colors.black87,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          trailing: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Text(
+                "${_timeFormat.format(shiftDetail.shift.beginTime.toLocal())} "
+                "- ${_timeFormat.format(shiftDetail.shift.finishTime.toLocal())}",
+                style: TextStyle(
+                  color: Theme.of(context).primaryColor,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 16,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    final DateFormat _timeFormat = DateFormat("HH:mm");
     final _controller = Get.find<ShiftController>();
     return Scaffold(
       appBar: AppBar(
@@ -102,73 +157,18 @@ class ShiftScreen extends StatelessWidget {
                           ),
                         );
                       }
-                      return ListView.builder(
+                      return RefreshIndicator(
+                        onRefresh: () async {
+                          await _controller.getAssignedShift(
+                              semesterId: _controller
+                                  .currentSemester?.value.semesterId);
+                        },
+                        child: ListView.builder(
                           itemCount: data.totalItems,
-                          itemBuilder: (context, index) {
-                            return Card(
-                              elevation: 2,
-                              margin: const EdgeInsets.symmetric(
-                                vertical: 8.0,
-                                horizontal: 4.0,
-                              ),
-                              child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: ListTile(
-                                  title: Text(
-                                    "Date: " +
-                                        DateFormat('dd/MM/yyyy').format(
-                                            assignShiftDetail[index]
-                                                .shift
-                                                .beginTime),
-                                    style: const TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                  subtitle: Padding(
-                                    padding: const EdgeInsets.only(top: 8.0),
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          "Subject: ${assignShiftDetail[index].subject.subjectCode}",
-                                          overflow: TextOverflow.ellipsis,
-                                          style: const TextStyle(
-                                            color: Colors.black87,
-                                            fontWeight: FontWeight.w500,
-                                          ),
-                                        ),
-                                        const SizedBox(height: 8.0),
-                                        Text(
-                                          "Room: ${assignShiftDetail[index].room.roomName}",
-                                          style: const TextStyle(
-                                            color: Colors.black87,
-                                            fontWeight: FontWeight.w500,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  trailing: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: [
-                                      Text(
-                                        "${_timeFormat.format(assignShiftDetail[index].shift.beginTime)} "
-                                        "- ${_timeFormat.format(assignShiftDetail[index].shift.finishTime)}",
-                                        style: TextStyle(
-                                          color: Theme.of(context).primaryColor,
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 16,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            );
-                          });
+                          itemBuilder: (context, index) => _buildShiftCard(
+                              context, index, assignShiftDetail[index]),
+                        ),
+                      );
                     }
                     return Center(
                       child: Column(

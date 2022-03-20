@@ -5,7 +5,7 @@ import 'package:get_storage/get_storage.dart';
 
 class BaseProvider extends GetConnect {
   // final _baseUrl = 'http://10.0.2.2:8080';
-  final _baseUrlOnRealDevice = "http://192.168.1.9:8080";
+  final _baseUrlOnRealDevice = "http://192.168.1.10:8080";
   final _storage = GetStorage(AppConstant.storageKey);
 
   @override
@@ -34,7 +34,7 @@ class BaseProvider extends GetConnect {
         request.headers['Authorization'] = 'Bearer $token';
       } catch (error) {
         _storage.remove(AppConstant.accessToken);
-        _storage.remove("refresh_token");
+        _storage.remove(AppConstant.refreshToken);
       }
       return request;
     });

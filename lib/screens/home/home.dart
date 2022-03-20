@@ -2,7 +2,7 @@ import 'package:community_material_icon/community_material_icon.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:valua_staff/models/assigned_shift.dart';
+import 'package:valua_staff/models/assigned_exam_room.dart';
 import 'package:valua_staff/routes/app_pages.dart';
 import 'package:valua_staff/screens/home/home_controller.dart';
 import 'package:valua_staff/widgets/card_with_icon.dart';
@@ -21,67 +21,70 @@ class HomeScreen extends StatelessWidget {
           children: [
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: const [
-                Text(
-                  "Today's exam",
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 16,
+              children: [
+                Obx(
+                  () => Text(
+                    _controller.shiftTitle.value,
+                    style: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16,
+                    ),
                   ),
                 ),
               ],
             ),
             const SizedBox(height: 20),
-            FutureBuilder(
-              future: _controller.assignedShiftList.value,
-              builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-                if (snapshot.hasData) {
-                  AssignedShift data = snapshot.data;
-                  final assignedShiftDetail = data.assignedShifts[0];
-                  return ShiftCard(
-                    onTap: () {
-                      Get.toNamed(AppRoutes.shift, arguments: {
-                        "semesterId": data.selectedSemester.semesterId
-                      });
-                    },
-                    thumbnail: SvgPicture.asset(
-                      'assets/images/exam.svg',
-                      semanticsLabel: "Schedule illustration",
-                      height: 100,
-                    ),
-                    beginTime: assignedShiftDetail.shift.beginTime,
-                    endTime: assignedShiftDetail.shift.finishTime,
-                    date: assignedShiftDetail.shift.beginTime,
-                    location: assignedShiftDetail.room.roomName,
-                  );
-                } else if (snapshot.hasError) {
-                  return Card(
-                    elevation: 2,
-                    child: SizedBox(
-                      width: double.infinity,
-                      height: 150,
-                      child: Column(children: [
-                        SvgPicture.asset(
-                          'assets/images/relax.svg',
-                          semanticsLabel: "Schedule illustration",
-                          height: 100,
-                        ),
-                        const SizedBox(height: 15),
-                        Text(
-                          "No exams available!",
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            color: Colors.grey.shade600,
+            Obx(
+              () => FutureBuilder(
+                future: _controller.assignedExamRoomFuture.value,
+                builder:
+                    (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+                  if (snapshot.hasData) {
+                    AssignedExamRoom data = snapshot.data;
+                    final assignedShift = data.currentShift;
+                    return ShiftCard(
+                      onTap: () {
+                        Get.toNamed(AppRoutes.shift);
+                      },
+                      thumbnail: SvgPicture.asset(
+                        'assets/images/exam.svg',
+                        semanticsLabel: "Schedule illustration",
+                        height: 100,
+                      ),
+                      beginTime: assignedShift.beginTime.toLocal(),
+                      endTime: assignedShift.finishTime.toLocal(),
+                      date: assignedShift.beginTime.toLocal(),
+                      location: data.currentRoom.roomName,
+                    );
+                  } else if (snapshot.hasError) {
+                    return Card(
+                      elevation: 2,
+                      child: SizedBox(
+                        width: double.infinity,
+                        height: 150,
+                        child: Column(children: [
+                          SvgPicture.asset(
+                            'assets/images/relax.svg',
+                            semanticsLabel: "Schedule illustration",
+                            height: 100,
                           ),
-                        ),
-                      ]),
-                    ),
+                          const SizedBox(height: 15),
+                          Text(
+                            "No shifts available!",
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: Colors.grey.shade600,
+                            ),
+                          ),
+                        ]),
+                      ),
+                    );
+                  }
+                  return const Center(
+                    child: CircularProgressIndicator(),
                   );
-                }
-                return const Center(
-                  child: CircularProgressIndicator(),
-                );
-              },
+                },
+              ),
             ),
             const SizedBox(height: 30),
             Row(
@@ -122,7 +125,9 @@ class HomeScreen extends StatelessWidget {
                     color: Theme.of(context).primaryColor,
                   ),
                   title: "Shift registration",
-                  onTap: () {},
+                  onTap: () {
+                    Get.toNamed(AppRoutes.shiftRegistration);
+                  },
                 ),
               ],
             ),

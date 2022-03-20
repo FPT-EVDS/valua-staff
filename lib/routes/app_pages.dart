@@ -12,6 +12,8 @@ import 'package:valua_staff/screens/main/main_screen.dart';
 import 'package:valua_staff/screens/qr_scanner/qr_scanner.dart';
 import 'package:valua_staff/screens/shift/shift.dart';
 import 'package:valua_staff/screens/shift/shift_binding.dart';
+import 'package:valua_staff/screens/shift_registration/shift_registration.dart';
+import 'package:valua_staff/screens/shift_registration/shift_registration_binding.dart';
 
 part 'app_routes.dart';
 
@@ -47,12 +49,17 @@ class AppPages {
     ),
     GetPage(
       name: AppRoutes.qr,
-      page: () => const QRScanner(),
+      page: () => const QRScannerScreen(),
     ),
     GetPage(
       name: AppRoutes.main,
       page: () => const MainScreen(),
       binding: MainBinding(),
+    ),
+    GetPage(
+      name: AppRoutes.shiftRegistration,
+      page: () => const ShiftRegistrationScreen(),
+      binding: ShiftRegistrationBinding(),
     )
   ];
 }

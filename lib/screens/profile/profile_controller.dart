@@ -30,16 +30,6 @@ class ProfileController extends GetxController {
       to: AppRoutes.changePassword,
     ),
     MenuItem(
-      icon: CommunityMaterialIcons.cog,
-      title: "Settings",
-      to: "#",
-    ),
-    MenuItem(
-      icon: CommunityMaterialIcons.file_document,
-      title: "Terms & Policies",
-      to: "#",
-    ),
-    MenuItem(
       icon: CommunityMaterialIcons.logout_variant,
       title: "Logout",
       to: AppRoutes.login,
@@ -61,9 +51,9 @@ class ProfileController extends GetxController {
       GetStorage _storage = GetStorage(AppConstant.storageKey);
       _storage.remove(AppConstant.accessToken);
       _storage.remove(AppConstant.refreshToken);
-      _storage.remove("user");
+      _storage.remove(AppConstant.appUser);
     }
-    // FIXME: Remove if when settings and term is initialize
+    // FIXME: Remove when settings and term is initialize
     if (menuData[index].to == AppRoutes.changePassword) {
       Get.toNamed(menuData[index].to);
     }
