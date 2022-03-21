@@ -42,6 +42,8 @@ class DetailProfileController extends GetxController {
     phoneController.dispose();
     birthdateController.dispose();
     addressController.dispose();
+    // ignore: invalid_use_of_protected_member
+    formKey.currentState?.dispose();
     super.dispose();
   }
 

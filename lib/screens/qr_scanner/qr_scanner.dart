@@ -12,7 +12,7 @@ class QRScannerScreen extends StatefulWidget {
 }
 
 class _QRScannerScreenState extends State<QRScannerScreen> {
-  final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
+  final GlobalKey qrKey = GlobalKey();
   Barcode? result;
   QRViewController? controller;
 
@@ -35,6 +35,7 @@ class _QRScannerScreenState extends State<QRScannerScreen> {
 
   @override
   void dispose() {
+    qrKey.currentState?.dispose();
     controller?.dispose();
     super.dispose();
   }

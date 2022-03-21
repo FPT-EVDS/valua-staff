@@ -26,6 +26,8 @@ class ChangePasswordController extends GetxController {
     currentPasswordController.dispose();
     newPasswordController.dispose();
     confirmPasswordController.dispose();
+    // ignore: invalid_use_of_protected_member
+    formKey.currentState?.dispose();
     super.dispose();
   }
 

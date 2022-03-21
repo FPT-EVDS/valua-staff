@@ -29,6 +29,8 @@ class LoginController extends GetxController {
   void dispose() {
     emailController.dispose();
     passwordController.dispose();
+    // ignore: invalid_use_of_protected_member
+    formKey.currentState?.dispose();
     super.dispose();
   }
 
