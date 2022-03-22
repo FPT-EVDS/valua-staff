@@ -35,6 +35,7 @@ class BaseProvider extends GetConnect {
       } catch (error) {
         _storage.remove(AppConstant.accessToken);
         _storage.remove(AppConstant.refreshToken);
+        _storage.remove(AppConstant.appUser);
       }
       return request;
     });
