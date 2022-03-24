@@ -11,7 +11,6 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 
 class LoginController extends GetxController {
-  final formKey = GlobalKey<FormState>();
   late TextEditingController emailController, passwordController;
   final isLoading = false.obs;
   final AuthRepository _provider = Get.find<AuthProvider>();
@@ -33,28 +32,26 @@ class LoginController extends GetxController {
   }
 
   Future<void> login() async {
-    if (formKey.currentState!.validate()) {
-      String email = emailController.text;
-      String password = passwordController.text;
-      try {
-        isLoading.value = true;
-        final data = await _provider.login(email, password);
-        if (data.appUser.role == "Staff") {
-          _storage.write(AppConstant.appUser, jsonEncode(data.appUser));
-          _storage.write(AppConstant.accessToken, data.token);
-          _storage.write(AppConstant.refreshToken, data.appUser.refreshToken);
-          Get.offAllNamed(AppRoutes.main);
-        } else {
-          throw ("Invalid role!");
-        }
-      } catch (e) {
-        Fluttertoast.showToast(
-          msg: e.toString(),
-          backgroundColor: Colors.grey.shade700,
-        );
-      } finally {
-        isLoading.value = false;
+    String email = emailController.text;
+    String password = passwordController.text;
+    try {
+      isLoading.value = true;
+      final data = await _provider.login(email, password);
+      if (data.appUser.role == "Staff") {
+        _storage.write(AppConstant.appUser, jsonEncode(data.appUser));
+        _storage.write(AppConstant.accessToken, data.token);
+        _storage.write(AppConstant.refreshToken, data.appUser.refreshToken);
+        Get.offAllNamed(AppRoutes.main);
+      } else {
+        throw ("Invalid role!");
       }
+    } catch (e) {
+      Fluttertoast.showToast(
+        msg: e.toString(),
+        backgroundColor: Colors.grey.shade700,
+      );
+    } finally {
+      isLoading.value = false;
     }
   }
 

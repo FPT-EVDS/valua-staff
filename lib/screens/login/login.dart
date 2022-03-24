@@ -6,7 +6,8 @@ import 'package:form_field_validator/form_field_validator.dart';
 import 'package:get/get.dart';
 
 class LoginScreen extends StatelessWidget {
-  const LoginScreen({Key? key}) : super(key: key);
+  LoginScreen({Key? key}) : super(key: key);
+  final formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +41,7 @@ class LoginScreen extends StatelessWidget {
                 ),
               ),
               Form(
-                key: _controller.formKey,
+                key: formKey,
                 child: Column(
                   children: <Widget>[
                     const SizedBox(
@@ -75,7 +76,9 @@ class LoginScreen extends StatelessWidget {
                     Obx(
                       () => RoundButton(
                         onPressed: () {
-                          _controller.login();
+                          if (formKey.currentState!.validate()) {
+                            _controller.login();
+                          }
                         },
                         height: 45,
                         width: double.infinity,
