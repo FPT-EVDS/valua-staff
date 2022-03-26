@@ -5,6 +5,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:valua_staff/models/shifts_registration.dart';
 import 'package:valua_staff/screens/shift_registration/shift_registration_controller.dart';
+import 'package:valua_staff/utils/time.dart';
 import 'package:valua_staff/widgets/round_button.dart';
 
 class Item {
@@ -119,17 +120,18 @@ class ShiftRegistrationScreen extends StatelessWidget {
                                         (shift) => ListTile(
                                           tileColor: Colors.white,
                                           title: Text(
-                                              "${_controller.timeFormatter.format(shift.beginTime)} - ${_controller.timeFormatter.format(shift.finishTime)}"),
+                                              "${_controller.timeFormatter.format(shift.beginTime.toLocal())} - ${_controller.timeFormatter.format(shift.finishTime.toLocal())}"),
                                           subtitle: Text(
                                               'Remaining slots: ${shift.availableSlots}'),
                                           leading: Icon(
-                                            _controller.isNight(shift.beginTime)
+                                            TimeUtils.isNight(
+                                                    shift.beginTime.toLocal())
                                                 ? CommunityMaterialIcons
                                                     .moon_full
                                                 : CommunityMaterialIcons
                                                     .white_balance_sunny,
-                                            color: _controller
-                                                    .isNight(shift.beginTime)
+                                            color: TimeUtils.isNight(
+                                                    shift.beginTime.toLocal())
                                                 ? Colors.purple
                                                 : Colors.orange,
                                             size: 32,

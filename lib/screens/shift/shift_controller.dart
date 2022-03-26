@@ -11,6 +11,9 @@ class ShiftController extends GetxController {
   final Rx<Semester>? currentSemester = null;
   final ExamRoomRepository _provider = Get.find<ExamRoomProvider>();
   final SemesterRepository _semesterRepository = Get.find<SemesterProvider>();
+  RxList<String> sectionTitles =
+      ["Next shift", "Upcoming shifts", "Finished shifts"].obs;
+  RxList<bool> isExpandedList = RxList<bool>();
 
   Future<void> getAssignedShift({String? semesterId}) async {
     try {
@@ -40,6 +43,7 @@ class ShiftController extends GetxController {
 
   @override
   void onInit() {
+    isExpandedList.value = List.generate(sectionTitles.length, (index) => true);
     String? semesterId = Get.arguments?["semesterId"];
     if (semesterId != null) {
       getListSemesters().then(

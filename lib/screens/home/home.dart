@@ -2,7 +2,7 @@ import 'package:community_material_icon/community_material_icon.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:valua_staff/models/assigned_exam_room.dart';
+import 'package:valua_staff/models/assigned_shift.dart';
 import 'package:valua_staff/routes/app_pages.dart';
 import 'package:valua_staff/screens/home/home_controller.dart';
 import 'package:valua_staff/widgets/card_with_icon.dart';
@@ -36,26 +36,65 @@ class HomeScreen extends StatelessWidget {
             const SizedBox(height: 20),
             Obx(
               () => FutureBuilder(
-                future: _controller.assignedExamRoomFuture.value,
+                future: _controller.assignedShiftFuture.value,
                 builder:
                     (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
                   if (snapshot.hasData) {
-                    AssignedExamRoom data = snapshot.data;
-                    final assignedShift = data.currentShift;
-                    return ShiftCard(
-                      onTap: () {
-                        Get.toNamed(AppRoutes.shift);
-                      },
-                      thumbnail: SvgPicture.asset(
-                        'assets/images/exam.svg',
-                        semanticsLabel: "Schedule illustration",
-                        height: 100,
-                      ),
-                      beginTime: assignedShift.beginTime.toLocal(),
-                      endTime: assignedShift.finishTime.toLocal(),
-                      date: assignedShift.beginTime.toLocal(),
-                      location: data.currentRoom.roomName,
-                    );
+                    AssignedShift data = snapshot.data;
+                    final currentShift = data.currentShift;
+                    final nextShift = data.nextShift;
+                    return currentShift != null
+                        ? ShiftCard(
+                            onTap: () {
+                              Get.toNamed(AppRoutes.shift);
+                            },
+                            thumbnail: SvgPicture.asset(
+                              'assets/images/exam.svg',
+                              semanticsLabel: "Schedule illustration",
+                              height: 100,
+                            ),
+                            beginTime: currentShift.shift.beginTime.toLocal(),
+                            endTime: currentShift.shift.finishTime.toLocal(),
+                            date: currentShift.shift.beginTime.toLocal(),
+                            location: currentShift.room.roomName,
+                          )
+                        : nextShift != null
+                            ? ShiftCard(
+                                onTap: () {
+                                  Get.toNamed(AppRoutes.shift);
+                                },
+                                thumbnail: SvgPicture.asset(
+                                  'assets/images/exam.svg',
+                                  semanticsLabel: "Schedule illustration",
+                                  height: 100,
+                                ),
+                                beginTime: nextShift.shift.beginTime.toLocal(),
+                                endTime: nextShift.shift.finishTime.toLocal(),
+                                date: nextShift.shift.beginTime.toLocal(),
+                                location: nextShift.room.roomName,
+                              )
+                            : Card(
+                                elevation: 2,
+                                child: SizedBox(
+                                  width: double.infinity,
+                                  height: 150,
+                                  child: Column(children: [
+                                    SvgPicture.asset(
+                                      'assets/images/relax.svg',
+                                      semanticsLabel: "Schedule illustration",
+                                      height: 100,
+                                    ),
+                                    const SizedBox(height: 15),
+                                    Text(
+                                      "No shifts available!",
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.grey.shade600,
+                                      ),
+                                    ),
+                                  ]),
+                                ),
+                              );
                   } else if (snapshot.hasError) {
                     return Card(
                       elevation: 2,

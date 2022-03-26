@@ -47,10 +47,6 @@ class ShiftRegistrationController extends GetxController {
     return result;
   }
 
-  bool isNight(DateTime date) {
-    return date.hour > 17 && date.hour < 23;
-  }
-
   @override
   void onInit() {
     getAvailableShifts();

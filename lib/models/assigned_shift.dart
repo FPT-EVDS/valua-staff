@@ -5,13 +5,19 @@ part 'assigned_shift.g.dart';
 @JsonSerializable()
 class AssignedShift {
   int totalItems;
-  List<ShiftDetail> assignedShifts;
+  ShiftDetail? currentShift;
+  ShiftDetail? nextShift;
   SelectedSemester selectedSemester;
+  List<ShiftDetail> upcomingShifts;
+  List<ShiftDetail> finishedShifts;
 
   AssignedShift({
     required this.totalItems,
-    required this.assignedShifts,
+    this.currentShift,
+    this.nextShift,
     required this.selectedSemester,
+    required this.upcomingShifts,
+    required this.finishedShifts,
   });
 
   factory AssignedShift.fromJson(Map<String, dynamic> json) =>
