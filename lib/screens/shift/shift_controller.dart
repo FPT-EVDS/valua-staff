@@ -43,7 +43,12 @@ class ShiftController extends GetxController {
 
   @override
   void onInit() {
-    isExpandedList.value = List.generate(sectionTitles.length, (index) => true);
+    isExpandedList.value = List.generate(sectionTitles.length, (index) {
+      if (index == sectionTitles.length - 1) {
+        return false;
+      }
+      return true;
+    });
     String? semesterId = Get.arguments?["semesterId"];
     if (semesterId != null) {
       getListSemesters().then(
