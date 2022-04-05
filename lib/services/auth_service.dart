@@ -13,8 +13,9 @@ class AuthService extends GetxService {
     _storage.listenKey(AppConstant.accessToken, (value) {
       if (value == null) {
         Get.offAllNamed(AppRoutes.login);
+      } else {
+        token = value.toString();
       }
-      token = value.toString();
     });
     super.onInit();
   }
