@@ -18,7 +18,7 @@ class ChangePasswordScreen extends StatelessWidget {
         title: const Text("Change password"),
         centerTitle: true,
       ),
-      resizeToAvoidBottomInset: false,
+      resizeToAvoidBottomInset: true,
       body: Padding(
         padding: const EdgeInsets.fromLTRB(20, 20, 20, 20),
         child: SingleChildScrollView(

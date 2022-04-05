@@ -1,5 +1,4 @@
-import 'dart:convert';
-
+import 'package:get/get.dart';
 import 'package:valua_staff/constants/app.dart';
 import 'package:valua_staff/models/account.dart';
 import 'package:valua_staff/models/app_user.dart';
@@ -46,10 +45,10 @@ class AuthProvider extends BaseProvider implements AuthRepository {
   }
 
   @override
-  Future<Account> updateProfile(Account newProfile) async {
+  Future<Account> updateProfile(FormData newProfile) async {
     final response = await put(
       "/authentication/profile",
-      jsonEncode(newProfile),
+      newProfile,
     );
     if (response.status.hasError) {
       throw (response.body);
