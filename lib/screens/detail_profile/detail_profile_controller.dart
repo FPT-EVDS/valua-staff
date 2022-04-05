@@ -46,6 +46,7 @@ class DetailProfileController extends GetxController {
   @override
   void dispose() {
     emailController.dispose();
+    fullNameController.dispose();
     phoneController.dispose();
     birthdateController.dispose();
     addressController.dispose();
