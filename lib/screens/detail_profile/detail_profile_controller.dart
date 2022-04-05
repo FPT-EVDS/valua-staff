@@ -81,8 +81,8 @@ class DetailProfileController extends GetxController {
         account.gender = genders.indexOf(gender);
         account.address = addressController.text;
         account.phoneNumber = phoneController.text;
-        account.birthdate = DateFormat("yyyy-MM-dd")
-            .format(_dateFormat.parse(birthdateController.text));
+        account.birthdate =
+            _dateFormat.parse(birthdateController.text).toIso8601String();
         final FormData _formData = FormData({
           'account': jsonEncode({
             "fullName": account.fullName,
