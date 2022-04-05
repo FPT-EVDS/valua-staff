@@ -34,12 +34,12 @@ class ProfileScreen extends StatelessWidget {
                   fit: BoxFit.cover,
                 ),
               ),
-              Obx(
-                () => Positioned(
-                  top: top,
-                  child: Stack(
-                    children: [
-                      _controller.currentUser.value != null
+              Positioned(
+                top: top,
+                child: Stack(
+                  children: [
+                    Obx(
+                      () => _controller.currentUser.value != null
                           ? Card(
                               elevation: 2,
                               child: SizedBox(
@@ -65,28 +65,28 @@ class ProfileScreen extends StatelessWidget {
                               ),
                             )
                           : const Center(child: CircularProgressIndicator()),
-                      Positioned(
-                        top: 0,
-                        right: 0,
-                        child: ClipOval(
-                          child: Material(
-                            color: Colors.transparent,
-                            child: IconButton(
-                              icon: const Icon(
-                                CommunityMaterialIcons.square_edit_outline,
-                                size: 20,
-                              ),
-                              color: Theme.of(context).primaryColor,
-                              splashColor: Colors.blue.withAlpha(30),
-                              onPressed: () {
-                                Get.toNamed(AppRoutes.detailProfile);
-                              },
+                    ),
+                    Positioned(
+                      top: 0,
+                      right: 0,
+                      child: ClipOval(
+                        child: Material(
+                          color: Colors.transparent,
+                          child: IconButton(
+                            icon: const Icon(
+                              CommunityMaterialIcons.square_edit_outline,
+                              size: 20,
                             ),
+                            color: Theme.of(context).primaryColor,
+                            splashColor: Colors.blue.withAlpha(30),
+                            onPressed: () {
+                              Get.toNamed(AppRoutes.detailProfile);
+                            },
                           ),
                         ),
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ),
             ],
