@@ -8,16 +8,16 @@ class AssignedShift {
   ShiftDetail? currentShift;
   ShiftDetail? nextShift;
   SelectedSemester selectedSemester;
-  List<ShiftDetail> upcomingShifts;
-  List<ShiftDetail> finishedShifts;
+  List<ShiftDetail>? upcomingShifts;
+  List<ShiftDetail>? finishedShifts;
 
   AssignedShift({
     required this.totalItems,
     this.currentShift,
     this.nextShift,
     required this.selectedSemester,
-    required this.upcomingShifts,
-    required this.finishedShifts,
+    this.upcomingShifts,
+    this.finishedShifts,
   });
 
   factory AssignedShift.fromJson(Map<String, dynamic> json) =>

@@ -146,10 +146,10 @@ class ShiftScreen extends StatelessWidget {
                         if (currentShift == null && nextShift == null) {
                           _controller.isExpandedList[0] = false;
                         }
-                        if (upcomingShifts.isEmpty) {
+                        if (upcomingShifts != null) {
                           _controller.isExpandedList[1] = false;
                         }
-                        if (finishedShifts.isEmpty) {
+                        if (finishedShifts != null) {
                           _controller.isExpandedList[2] = false;
                         }
                         return RefreshIndicator(
@@ -210,7 +210,7 @@ class ShiftScreen extends StatelessWidget {
                                       ),
                                     );
                                   },
-                                  body: upcomingShifts.isNotEmpty
+                                  body: upcomingShifts != null
                                       ? Column(
                                           children: upcomingShifts
                                               .map((upcomingShift) =>
@@ -236,7 +236,7 @@ class ShiftScreen extends StatelessWidget {
                                       ),
                                     );
                                   },
-                                  body: finishedShifts.isNotEmpty
+                                  body: finishedShifts != null
                                       ? Column(
                                           children: finishedShifts
                                               .map((finishedShift) =>

@@ -17,11 +17,11 @@ AssignedShift _$AssignedShiftFromJson(Map<String, dynamic> json) =>
           : ShiftDetail.fromJson(json['nextShift'] as Map<String, dynamic>),
       selectedSemester: SelectedSemester.fromJson(
           json['selectedSemester'] as Map<String, dynamic>),
-      upcomingShifts: (json['upcomingShifts'] as List<dynamic>)
-          .map((e) => ShiftDetail.fromJson(e as Map<String, dynamic>))
+      upcomingShifts: (json['upcomingShifts'] as List<dynamic>?)
+          ?.map((e) => ShiftDetail.fromJson(e as Map<String, dynamic>))
           .toList(),
-      finishedShifts: (json['finishedShifts'] as List<dynamic>)
-          .map((e) => ShiftDetail.fromJson(e as Map<String, dynamic>))
+      finishedShifts: (json['finishedShifts'] as List<dynamic>?)
+          ?.map((e) => ShiftDetail.fromJson(e as Map<String, dynamic>))
           .toList(),
     );
 
