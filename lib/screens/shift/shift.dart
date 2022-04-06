@@ -121,7 +121,7 @@ class ShiftScreen extends StatelessWidget {
                               ),
                             ),
                             onChanged: _controller.handleChangeSemester,
-                            selectedItem: _controller.currentSemester?.value ??
+                            selectedItem: _controller.currentSemester.value ??
                                 snapshot.data[0],
                           ),
                         );
@@ -156,7 +156,7 @@ class ShiftScreen extends StatelessWidget {
                           onRefresh: () async {
                             await _controller.getAssignedShift(
                               semesterId:
-                                  _controller.currentSemester?.value.semesterId,
+                                  _controller.currentSemester.value?.semesterId,
                             );
                           },
                           child: Obx(
