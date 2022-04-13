@@ -5,12 +5,12 @@ import 'package:get_storage/get_storage.dart';
 
 class BaseProvider extends GetConnect {
   // final _baseUrl = 'http://10.0.2.2:8080';
-  final _baseUrlOnRealDevice = "http://192.168.1.10:8080";
+  final _baseUrl = AppConstant.apiUrl;
   final _storage = GetStorage(AppConstant.storageKey);
 
   @override
   void onInit() {
-    httpClient.baseUrl = _baseUrlOnRealDevice;
+    httpClient.baseUrl = _baseUrl;
     httpClient.defaultContentType = "application/json";
     //Autenticator will be called 1 times if HttpStatus is
     //HttpStatus.unauthorized

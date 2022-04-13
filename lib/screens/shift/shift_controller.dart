@@ -8,9 +8,12 @@ import 'package:valua_staff/repository/semester_repository.dart';
 
 class ShiftController extends GetxController {
   final assignedShiftList = Future<AssignedShift?>.value().obs;
-  final Rx<Semester>? currentSemester = null;
+  final currentSemester = Rx<Semester?>(null);
   final ExamRoomRepository _provider = Get.find<ExamRoomProvider>();
   final SemesterRepository _semesterRepository = Get.find<SemesterProvider>();
+  RxList<String> sectionTitles =
+      ["Next shift", "Upcoming shifts", "Finished shifts"].obs;
+  RxList<bool> isExpandedList = RxList<bool>();
 
   Future<void> getAssignedShift({String? semesterId}) async {
     try {
@@ -33,20 +36,26 @@ class ShiftController extends GetxController {
 
   void handleChangeSemester(Semester? semester) {
     if (semester != null) {
-      currentSemester?.value = semester;
+      currentSemester.value = semester;
       getAssignedShift(semesterId: semester.semesterId);
     }
   }
 
   @override
   void onInit() {
+    isExpandedList.value = List.generate(sectionTitles.length, (index) {
+      if (index == sectionTitles.length - 1) {
+        return false;
+      }
+      return true;
+    });
     String? semesterId = Get.arguments?["semesterId"];
     if (semesterId != null) {
       getListSemesters().then(
         (value) {
           final semester =
               value.firstWhere((element) => element.semesterId == semesterId);
-          currentSemester?.value = semester;
+          currentSemester.value = semester;
           return getAssignedShift(semesterId: semesterId);
         },
       );

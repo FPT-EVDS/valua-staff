@@ -36,13 +36,19 @@ class ProfileController extends GetxController {
     ),
   ];
   final AuthRepository authRepository = Get.find<AuthProvider>();
-  late final Account currentUser;
+  final currentUser = Rx<Account?>(null);
   final GetStorage _storage = GetStorage(AppConstant.storageKey);
 
   @override
   void onInit() {
-    currentUser = Account.fromJson(jsonDecode(_storage.read("user")));
+    currentUser.value =
+        Account.fromJson(jsonDecode(_storage.read(AppConstant.appUser)));
     super.onInit();
+  }
+
+  Future<void> refreshUser() async {
+    currentUser.value =
+        Account.fromJson(jsonDecode(_storage.read(AppConstant.appUser)));
   }
 
   void handleMenuTap(int index) {
@@ -53,7 +59,6 @@ class ProfileController extends GetxController {
       _storage.remove(AppConstant.refreshToken);
       _storage.remove(AppConstant.appUser);
     }
-    // FIXME: Remove when settings and term is initialize
     if (menuData[index].to == AppRoutes.changePassword) {
       Get.toNamed(menuData[index].to);
     }

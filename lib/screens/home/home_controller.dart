@@ -1,33 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
-import 'package:valua_staff/models/assigned_exam_room.dart';
+import 'package:valua_staff/models/assigned_shift.dart';
 import 'package:valua_staff/providers/exam_room_provider.dart';
 import 'package:valua_staff/repository/exam_room_repository.dart';
 
 class HomeController extends GetxController {
-  final assignedExamRoom = Rx<AssignedExamRoom?>(null);
-  final assignedExamRoomFuture = Future<AssignedExamRoom?>.value().obs;
+  final assignedShift = Rx<AssignedShift?>(null);
+  final assignedShiftFuture = Future<AssignedShift?>.value().obs;
   final shiftTitle = "Today's shift".obs;
   final ExamRoomRepository _provider = Get.find<ExamRoomProvider>();
 
-  Future<AssignedExamRoom?> getAssignedExamRoom() async {
+  Future<AssignedShift?> getAssignedExamRoom() async {
     try {
-      final data = _provider.getAssignedExamRoom();
+      final data = _provider.getAssignedShift();
       data.then((value) {
-        assignedExamRoom.value = value;
-        final shiftBeginTime = value.currentShift.beginTime.toLocal();
-        final shiftEndTime = value.currentShift.finishTime.toLocal();
-        final currentTime = DateTime.now();
-        if (currentTime.isBefore(shiftBeginTime)) {
-          shiftTitle.value = 'Next shift';
-        } else if (currentTime.isAfter(shiftBeginTime) &&
-            currentTime.isBefore(shiftEndTime)) {
+        if (value.currentShift != null) {
           shiftTitle.value = 'Current shift';
+        } else if (value.nextShift != null) {
+          shiftTitle.value = 'Next shift';
         }
         return value;
       });
-      assignedExamRoomFuture.value = data;
+      assignedShiftFuture.value = data;
       return data;
     } catch (err) {
       Fluttertoast.showToast(

@@ -1,6 +1,5 @@
 import 'package:valua_staff/models/assigned_exam_room.dart';
 import 'package:valua_staff/models/assigned_shift.dart';
-import 'package:valua_staff/models/shift_detail.dart';
 import 'package:valua_staff/providers/base_provider.dart';
 import 'package:valua_staff/repository/exam_room_repository.dart';
 
@@ -14,15 +13,6 @@ class ExamRoomProvider extends BaseProvider implements ExamRoomRepository {
       throw (response.body);
     }
     return AssignedShift.fromJson(response.body);
-  }
-
-  @override
-  Future<ShiftDetail> getShiftDetail(String id) async {
-    final response = await get("/examRooms/$id");
-    if (response.status.hasError) {
-      throw (response.body);
-    }
-    return ShiftDetail.fromJson(response.body);
   }
 
   @override

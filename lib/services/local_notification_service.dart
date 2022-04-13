@@ -1,6 +1,7 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:valua_staff/screens/notification/notification_controller.dart';
 
@@ -38,7 +39,10 @@ class LocalNotificationService extends GetxController {
       _notifcationController.getNotifications();
       hasUnreadMessage.value = true;
     } on Exception catch (e) {
-      print(e);
+      Fluttertoast.showToast(
+        msg: e.toString(),
+        backgroundColor: Colors.grey.shade700,
+      );
     }
   }
 
