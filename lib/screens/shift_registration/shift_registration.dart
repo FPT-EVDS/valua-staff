@@ -20,15 +20,6 @@ class Item {
   bool isExpanded;
 }
 
-List<Item> generateItems(int numberOfItems) {
-  return List<Item>.generate(numberOfItems, (int index) {
-    return Item(
-      headerValue: 'Panel $index',
-      expandedValue: 'This is item number $index',
-    );
-  });
-}
-
 class ShiftRegistrationScreen extends StatelessWidget {
   const ShiftRegistrationScreen({Key? key}) : super(key: key);
 
@@ -36,16 +27,17 @@ class ShiftRegistrationScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final _controller = Get.find<ShiftRegistrationController>();
 
-    Future<dynamic> showConfirmDialog(String shiftId) {
+    Future<dynamic> showConfirmDialog() {
       return CoolAlert.show(
           context: context,
           type: CoolAlertType.warning,
           showCancelBtn: true,
-          title: "Register this shift ?",
+          title:
+              "Register ${_controller.listSelectedShifts.length} selected shifts ?",
           text: "This action can't be reverted",
           onConfirmBtnTap: () async {
             try {
-              await _controller.registerShift(shiftId);
+              await _controller.registerShifts();
               Get.back();
               CoolAlert.show(
                 context: context,
@@ -76,6 +68,21 @@ class ShiftRegistrationScreen extends StatelessWidget {
                 icon: const Icon(Icons.refresh))
           ],
         ),
+        bottomNavigationBar: Obx(
+          () => Visibility(
+            visible: _controller.listSelectedShifts.isNotEmpty,
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: RoundButton(
+                label: 'Register',
+                onPressed: () {
+                  showConfirmDialog();
+                },
+                height: 48,
+              ),
+            ),
+          ),
+        ),
         body: SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.only(top: 20),
@@ -104,7 +111,7 @@ class ShiftRegistrationScreen extends StatelessWidget {
                               isExpanded: _controller.isExpandedList[index],
                               headerBuilder:
                                   (BuildContext context, bool isExpanded) {
-                                return ListTile(
+                                return CheckboxListTile(
                                   title: Text(
                                     e.key,
                                     style: const TextStyle(
@@ -112,18 +119,34 @@ class ShiftRegistrationScreen extends StatelessWidget {
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),
+                                  controlAffinity:
+                                      ListTileControlAffinity.leading,
+                                  onChanged: (bool? value) {
+                                    final shiftsId =
+                                        e.value.map((e) => e.shiftId);
+                                    if (value == true) {
+                                      _controller.listSelectedShifts
+                                          .addAll(shiftsId);
+                                    } else {
+                                      _controller.listSelectedShifts
+                                          .removeAll(shiftsId);
+                                    }
+                                  },
+                                  value: _controller.listSelectedShifts
+                                      .containsAll(e.value
+                                          .map((shift) => shift.shiftId)),
                                 );
                               },
                               body: Column(
                                   children: e.value
                                       .map(
-                                        (shift) => ListTile(
+                                        (shift) => CheckboxListTile(
                                           tileColor: Colors.white,
                                           title: Text(
                                               "${_controller.timeFormatter.format(shift.beginTime.toLocal())} - ${_controller.timeFormatter.format(shift.finishTime.toLocal())}"),
                                           subtitle: Text(
                                               'Remaining slots: ${shift.availableSlots}'),
-                                          leading: Icon(
+                                          secondary: Icon(
                                             TimeUtils.isNight(
                                                     shift.beginTime.toLocal())
                                                 ? CommunityMaterialIcons
@@ -136,13 +159,19 @@ class ShiftRegistrationScreen extends StatelessWidget {
                                                 : Colors.orange,
                                             size: 32,
                                           ),
-                                          trailing: RoundButton(
-                                            label: 'Register',
-                                            onPressed: () {
-                                              showConfirmDialog(shift.shiftId);
-                                            },
-                                            height: 32,
-                                          ),
+                                          controlAffinity:
+                                              ListTileControlAffinity.leading,
+                                          onChanged: (bool? value) {
+                                            if (value == true) {
+                                              _controller.listSelectedShifts
+                                                  .add(shift.shiftId);
+                                            } else {
+                                              _controller.listSelectedShifts
+                                                  .remove(shift.shiftId);
+                                            }
+                                          },
+                                          value: _controller.listSelectedShifts
+                                              .contains(shift.shiftId),
                                         ),
                                       )
                                       .toList()),

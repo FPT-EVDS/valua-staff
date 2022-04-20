@@ -9,6 +9,7 @@ class ShiftRegistrationController extends GetxController {
   final DateFormat formatter = DateFormat('EEEE, dd/MM/yyyy');
   final DateFormat timeFormatter = DateFormat('HH:mm');
   final ShiftRepository _shiftRepository = Get.find<ShiftProvider>();
+  final listSelectedShifts = RxSet<String>();
   RxList<bool> isExpandedList = RxList<bool>();
 
   Future<void> getAvailableShifts() async {
@@ -18,6 +19,7 @@ class ShiftRegistrationController extends GetxController {
             List.generate(value.shifts.length, (index) => true);
         return value;
       });
+      listSelectedShifts.clear();
       availableShifts.value = data;
     } catch (err) {
       throw Exception(err);
@@ -27,6 +29,15 @@ class ShiftRegistrationController extends GetxController {
   Future<bool> registerShift(String shiftId) async {
     try {
       final data = _shiftRepository.registerShift(shiftId);
+      return data;
+    } catch (err) {
+      throw Exception(err);
+    }
+  }
+
+  Future<bool> registerShifts() async {
+    try {
+      final data = _shiftRepository.registerShifts(listSelectedShifts.toList());
       return data;
     } catch (err) {
       throw Exception(err);
