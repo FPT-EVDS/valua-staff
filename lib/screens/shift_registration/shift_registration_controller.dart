@@ -48,7 +48,7 @@ class ShiftRegistrationController extends GetxController {
       List<ShiftsRegistrationDetail> shifts) {
     Map<String, List<ShiftsRegistrationDetail>> result = {};
     for (var shift in shifts) {
-      String date = formatter.format(shift.beginTime);
+      String date = formatter.format(shift.beginTime.toLocal());
       result.update(
         date,
         (v) => [...?result[date], shift],
