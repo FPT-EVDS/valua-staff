@@ -121,20 +121,21 @@ class ShiftRegistrationScreen extends StatelessWidget {
                                   ),
                                   controlAffinity:
                                       ListTileControlAffinity.leading,
-                                  onChanged: (bool? value) {
-                                    final shiftsId =
-                                        e.value.map((e) => e.shiftId);
-                                    if (value == true) {
-                                      _controller.listSelectedShifts
-                                          .addAll(shiftsId);
-                                    } else {
-                                      _controller.listSelectedShifts
-                                          .removeAll(shiftsId);
-                                    }
-                                  },
+                                  onChanged: _controller
+                                          .checkIfShiftsHasCrossTimeShift(
+                                              e.value)
+                                      ? null
+                                      : (bool? value) {
+                                          if (value == true) {
+                                            _controller.listSelectedShifts
+                                                .addAll(e.value);
+                                          } else {
+                                            _controller.listSelectedShifts
+                                                .removeAll(e.value);
+                                          }
+                                        },
                                   value: _controller.listSelectedShifts
-                                      .containsAll(e.value
-                                          .map((shift) => shift.shiftId)),
+                                      .containsAll(e.value),
                                 );
                               },
                               body: Column(
@@ -161,17 +162,26 @@ class ShiftRegistrationScreen extends StatelessWidget {
                                           ),
                                           controlAffinity:
                                               ListTileControlAffinity.leading,
-                                          onChanged: (bool? value) {
-                                            if (value == true) {
-                                              _controller.listSelectedShifts
-                                                  .add(shift.shiftId);
-                                            } else {
-                                              _controller.listSelectedShifts
-                                                  .remove(shift.shiftId);
-                                            }
-                                          },
+                                          onChanged:
+                                              _controller.checkIfShiftCrossTime(
+                                            _controller.listSelectedShifts
+                                                .toList(),
+                                            shift,
+                                          )
+                                                  ? null
+                                                  : (bool? value) {
+                                                      if (value == true) {
+                                                        _controller
+                                                            .listSelectedShifts
+                                                            .add(shift);
+                                                      } else {
+                                                        _controller
+                                                            .listSelectedShifts
+                                                            .remove(shift);
+                                                      }
+                                                    },
                                           value: _controller.listSelectedShifts
-                                              .contains(shift.shiftId),
+                                              .contains(shift),
                                         ),
                                       )
                                       .toList()),
